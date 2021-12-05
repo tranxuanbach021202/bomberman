@@ -46,7 +46,7 @@ public class Alien extends DynamicEntity {
         if(checkCollision() == Constant.COLLISION_WITH_FLAME) {
             status = Constant.STATUS_DESTROY;
             if (this instanceof Oneal) {
-                Constant.score++;
+                Constant.score+=1;
             } else {
                 Constant.score+=2;
             }

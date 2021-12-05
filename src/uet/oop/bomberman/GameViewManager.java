@@ -60,7 +60,6 @@ public class GameViewManager {
     private Text textHeal = new Text("0");
     private Text textSpeed  = new Text("0");
     private Text textPowerup = new Text("0");
-    private String ulrHeal = "/img/heal.png";
 
 
     public GameViewManager() {
@@ -131,10 +130,16 @@ public class GameViewManager {
 
         //WinGamer
         for (int i = 0 ; i < stillObjects.size(); i++) {
-            if (stillObjects.get(i) instanceof Alien  ) {
-                winGame++;
+            if (stillObjects.get(i) instanceof Balloon ) {
+                winGame+=2;
+            } else if (stillObjects.get(i) instanceof Oneal) {
+                winGame+=1;
             }
         }
+        System.out.println(winGame);
+        URL linkFile = GameViewManager.class.getResource("/img/score.png");
+        String s = linkFile.toString().substring(6,linkFile.toString().length() - 3) + "txt";
+        System.out.println(s);
 
 
 
@@ -144,13 +149,17 @@ public class GameViewManager {
                 render();
                 update();
                 bomber.updatePosition(direc);
-                for (int i = 0; i < stillObjects.size(); i++) {
-                    if (stillObjects.get(i) instanceof Alien && stillObjects.get(i).status == Constant.STATUS_DESTROY) {
-                        winGame_++;
-                    }
-                }
+                if (winGame == Constant.score) {
+                    try {
 
-                if (winGame_ == winGame) {
+                        FileWriter fw = new FileWriter(s, true);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write( String.valueOf(level) + " " + String.valueOf(Constant.score) + "\n");
+                        Constant.score = 0;
+                        bw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     stop();
                     winImg = new ImageView(link1.toString());
                     winImg.setLayoutY(95);
@@ -159,11 +168,9 @@ public class GameViewManager {
                     root.getChildren().add(winImg);
                 }
 
-
-
                 if (heal == 0) {
                     try {
-                        FileWriter fw = new FileWriter("D:\\bomberman\\res\\score.txt", true);
+                        FileWriter fw = new FileWriter(s, true);
                         BufferedWriter bw = new BufferedWriter(fw);
                         bw.write( String.valueOf(level) + " " + String.valueOf(Constant.score) + "\n");
                         Constant.score = 0;

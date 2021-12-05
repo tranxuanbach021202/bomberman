@@ -13,11 +13,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.SubClass.Constant;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 public class MenuManager {
@@ -34,6 +33,7 @@ public class MenuManager {
     private String urlBackGround = "/img/background.png";
     private String urlLogo = "/img/logo.png";
     private String urlLogoScore = "/img/score.png";
+
     private ArrayList<List> listScore = new ArrayList<List>();
 
     private void creatBackground() {
@@ -172,6 +172,7 @@ public class MenuManager {
         kill.setLayoutX(250);
         kill.setLayoutY(100);
 
+
         scoreSubscene.getPane().getChildren().addAll(stt, level, kill, logoScore);
         mainPane.getChildren().add(scoreSubscene);
         updateScore();
@@ -181,7 +182,13 @@ public class MenuManager {
 
         //doc file score
         try {
-            FileInputStream fileInputStream = new FileInputStream("D:\\bomberman\\res\\score.txt");
+           String urlScoreFile = "/img/score.png";
+           URL linkFile = MenuManager.class.getResource(urlScoreFile);
+           String s = linkFile.toString().substring(0,linkFile.toString().length()-3) + "txt";
+           s = s.substring(6);
+           System.out.println(s);
+
+            FileInputStream fileInputStream = new FileInputStream(s);
             Scanner sc = new Scanner(fileInputStream);
             List<Scorelist> scorelists = new ArrayList<>();
             while (sc.hasNextInt() ) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Bomber extends DynamicEntity {
     private boolean dead = false;
-    private int heal = 50000;
+    private int heal = 500000;
     private double speed = 2;
     private final double MAX_SPEED = 4;
     private int power_up = Constant.POWER_UP_1;
