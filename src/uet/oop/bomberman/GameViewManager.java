@@ -181,6 +181,10 @@ public class GameViewManager {
                 }
 
                 if (heal == 0) {
+                    Scorelist scorelist = new Scorelist();
+                    scorelist.setScore(Constant.score);
+                    scorelist.setLevel(level);
+                    MenuManager.scorelists.add(scorelist);
                     try {
                         FileWriter fw = new FileWriter(s, true);
                         BufferedWriter bw = new BufferedWriter(fw);
