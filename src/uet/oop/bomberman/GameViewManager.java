@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 import java.awt.image.RGBImageFilter;
 import java.io.*;
 import java.net.URL;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.SubClass.Constant;
@@ -31,9 +33,6 @@ import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.*;
@@ -150,6 +149,19 @@ public class GameViewManager {
                 update();
                 bomber.updatePosition(direc);
                 if (winGame == Constant.score) {
+                    Scorelist scorelist = new Scorelist();
+                    scorelist.setScore(Constant.score);
+                    scorelist.setLevel(level);
+                    MenuManager.scorelists.add(scorelist);
+                    Collections.sort(MenuManager.scorelists, new Comparator<Scorelist>() {
+                        @Override
+                        public int compare(Scorelist o1, Scorelist o2) {
+                            if (o1.getScore() > o2.getScore()) {
+                                return -1;
+                            }
+                            return 0;
+                        }
+                    });
                     try {
 
                         FileWriter fw = new FileWriter(s, true);
